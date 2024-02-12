@@ -1,36 +1,32 @@
 package ru.my.tests.base;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import ru.my.framework.managers.DriverManager;
+import ru.my.framework.managers.InitManager;
+import ru.my.framework.managers.PageManager;
+import ru.my.framework.managers.TestPropManager;
+import ru.my.framework.utils.ConstansProp;
 
 public class BaseTest {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    private final TestPropManager testPropManager = TestPropManager.getTestPropManager();
+    protected final PageManager pageManager = PageManager.getPageManager();
 
-    @Before
-    public void installDriver() {
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(15));
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        wait = new WebDriverWait(driver, Duration.ofMillis(10), Duration.ofSeconds(10));
-
-        String baseUrl = "https://www.saucedemo.com/";
-        driver.get(baseUrl);
+    @BeforeAll
+    public static void before() {
+        InitManager.initFramework();
     }
 
+    @BeforeEach
+    public void beforeEach(){
+        DriverManager.getDriverManager().getDriver()
+                .get(testPropManager.getProperty(ConstansProp.BASE_URL));
+    }
 
-    @After
-    public void quitDriver() {
-        driver.quit();
+    @AfterAll
+    public static void after() {
+        InitManager.quitFramework();
     }
 
 }

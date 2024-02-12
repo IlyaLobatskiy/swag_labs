@@ -1,47 +1,54 @@
 package ru.my.tests;
 
-import org.junit.Assert;
-import org.junit.Test;
-import ru.my.framework.pages.AuthorizationPage;
-import ru.my.framework.pages.MainPage;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import ru.my.tests.base.BaseTest;
 
 public class AuthorizationTest extends BaseTest {
 
-
     @Test
     public void authorization(){
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver);
-        MainPage mainPage = authorizationPage.authorization("standard_user", "secret_sauce");
 
-        Assert.assertEquals("Пользователь не авторизован", "Products", mainPage.getTextTitleProduct());
+        String resault = pageManager.getAuthorizationPage()
+                .authorization("standard_user", "secret_sauce").getTextTitleProduct();
+
+        Assertions.assertEquals(
+                "Products", resault, "Пользователь не авторизован");
     }
 
     @Test
     public void emptyName(){
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver);
-        authorizationPage.authorization("", "secret_sauce");
-        String res = authorizationPage.getErroreText();
 
-        Assert.assertEquals("Неверный текст ошибки", "Epic sadface: Username is required", res);
+        pageManager.getAuthorizationPage()
+                .authorization("", "secret_sauce");
+        String res = pageManager.getAuthorizationPage()
+                .getErroreText();
+
+        Assertions.assertEquals(
+                "Epic sadface: Username is required", res, "Неверный текст ошибки");
     }
 
     @Test
     public void emptyPassword(){
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver);
-        authorizationPage.authorization("standard_user", "");
-        String res = authorizationPage.getErroreText();
 
-        Assert.assertEquals("Неверный текст ошибки", "Epic sadface: Password is required", res);
+        pageManager.getAuthorizationPage()
+                .authorization("standard_user", "");
+        String res = pageManager.getAuthorizationPage()
+                .getErroreText();
+
+        Assertions.assertEquals(
+                "Epic sadface: Password is required", res, "Неверный текст ошибки");
     }
 
     @Test
     public void incorrectUser(){
-        AuthorizationPage authorizationPage = new AuthorizationPage(driver);
-        authorizationPage.authorization("asd", "asd");
-        String res = authorizationPage.getErroreText();
 
-        Assert.assertEquals("Неверный текст ошибки", "Epic sadface: Username and password do not match any user in this service", res);
+        pageManager.getAuthorizationPage().authorization("asd", "asd");
+        String resault = pageManager.getAuthorizationPage().getErroreText();
+
+        Assertions.assertEquals(
+                "Epic sadface: Username and password do not match any user in this service",
+                resault, "Неверный текст ошибки");
     }
 
 }
