@@ -23,12 +23,11 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Веврсии зависимостей -->
-        <junit.jupiter.version>5.10.0</junit.jupiter.version>
-        <junit-platform-launcher.version>1.10.0</junit-platform-launcher.version>
+        <junit.jupiter.version>5.9.3</junit.jupiter.version>
+        <junit-platform-launcher.version>1.9.3</junit-platform-launcher.version>
         <selenium-java.version>4.17.0</selenium-java.version>
         <commons-validator.version>1.7</commons-validator.version>
         <allure-junit4.version>2.25.0</allure-junit4.version>
-        <lombok.version>1.18.30</lombok.version>
 
         <!-- Версии плагинов -->
         <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
@@ -123,13 +122,11 @@
             <version>${allure-junit4.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.8.0</version>
+            <scope>test</scope>
         </dependency>
 
 
